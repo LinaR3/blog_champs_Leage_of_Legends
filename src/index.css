@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=Rajdhani:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --font-bungee: 'Bungee', cursive;
+  --font-bungee-shade: 'Bungee Shade', cursive;
+  --font-rajdhani: 'Rajdhani', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+
+h1 {
+  font-family: var(--font-bungee);
+}
+
+.titulo-efecto {
+  font-family: var(--font-bungee-shade);
+}
+
+body {
+  font-family: var(--font-rajdhani);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}
