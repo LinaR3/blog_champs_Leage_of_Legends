@@ -1,28 +1,37 @@
-const BASE_URL = "https://ddragon.leagueoflegends.com/cdn";
+import { useState, useEffect } from "react";
+import { getChampions, getLatestVersion } from "../services/ddragon.js"; // 
 
-export async function getLatestVersion() {
-  const response = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
-  const versions = await response.json();
-  return versions[0];
-}
+export function useChampions() {
+  const [champions, setChampions] = useState({}); //
+  const [list, setList] = useState([]); // Arreglo para mapear en la grilla
+  const [version, setVersion] = useState("");
+  const [loading, setLoading] = useState(true);
 
-export async function getChampions() {
-  const version = await getLatestVersion();
-  const response = await fetch(`${BASE_URL}/${version}/data/es_ES/champion.json`);
-  const data = await response.json();
-  return Object.values(data.data);
-}
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const v = await getLatestVersion();
+        setVersion(v);
 
-export async function getChampionDetail(championId) {
-  const version = await getLatestVersion();
-  const response = await fetch(`${BASE_URL}/${version}/data/es_ES/champion/${championId}.json`);
-  const data = await response.json();
-  return data.data[championId];
-}
+        const champsArray = await getChampions();
+        setList(champsArray);
 
-export async function getItems() {
-  const version = await getLatestVersion();
-  const response = await fetch(`${BASE_URL}/${version}/data/es_ES/item.json`);
-  const data = await response.json();
-  return data.data;
+        // Convertir el array a un diccionario (objeto) para búsquedas rápidas
+        const champsObj = champsArray.reduce((acc, champ) => {
+          acc[champ.id] = champ;
+          return acc;
+        }, {});
+        setChampions(champsObj);
+
+      } catch (error) {
+        console.error("Error al cargar campeones:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  return { champions, list, version, loading };
 }
