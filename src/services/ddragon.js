@@ -1,6 +1,6 @@
 const BASE_URL = "https://ddragon.leagueoflegends.com/cdn";
 
-// Primero obtenemos la versión más reciente de la API
+// Versión más reciente de la API
 export async function getLatestVersion() {
   const response = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
   const versions = await response.json();
@@ -12,7 +12,7 @@ export async function getChampions() {
   const version = await getLatestVersion();
   const response = await fetch(`${BASE_URL}/${version}/data/es_ES/champion.json`);
   const data = await response.json();
-  return Object.values(data.data); // Retorna un array con todos los campeones
+  return Object.values(data.data);
 }
 
 // Obtener detalles de un campeón específico
