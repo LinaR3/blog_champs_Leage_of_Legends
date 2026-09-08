@@ -1,15 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 
 // Layout principal que contiene el menú lateral, header y <Outlet />
-import App from "./App.jsx";
+import App from "./App.js";
 
 // Vistas individuales (Asegúrate de que las rutas coincidan con tu estructura de carpetas)
-import HeroSection from "./components/Hero/HeroSection.jsx";
-import ChampionsGrid from "./components/Blog/ChampionsGrid.jsx";
-import ChampionDetail from "./components/Blog/ChampionDetail.jsx";
-import ItemsGrid from "./components/Blog/ItemsGrid.jsx";
-import MapsView from "./components/Blog/MapsView.jsx";
-import FavoritesView from "./components/Blog/FavoritesView.jsx";
+import HeroSection from "./components/Hero/HeroSection.js";
+import ChampionsGrid from "./components/Blog/ChampionsGrid.js";
+import ChampionDetail from "./components/Blog/ChampionDetail.js";
+import ItemsGrid from "./components/Blog/ItemsGrid.js";
+import MapsView from "./components/Blog/MapsView.js";
+import FavoritesView from "./components/Blog/FavoritesView.js";
 
 export const router = createBrowserRouter([
     {

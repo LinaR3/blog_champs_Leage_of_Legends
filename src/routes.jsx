@@ -1,19 +1,19 @@
 import { createBrowserRouter } from "react-router-dom";
 
 // Importación del Layout principal
-import App from "./App";
+import { Layout } from "./pages/Layout";
 
 import HeroSection from "./components/Hero/HeroSection";
-import ChampionsGrid from "./components/Blog/ChampionsGrid";
-import ChampionDetail from "./components/Blog/ChampionDetail";
-import ItemsGrid from "./components/Blog/ItemsGrid";
-import MapsView from "./components/Blog/MapsView";
-import FavoritesView from "./components/Blog/FavoritesView";
+import ChampionsGrid from "./components/blog/ChampionsGrid";
+import ChampionDetail from "./components/blog/ChampionDetail";
+import ItemsGrid from "./components/blog/ItemsGrid";
+import MapsView from "./components/blog/MapsView";
+import FavoritesView from "./components/blog/FavoritesView";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />, 
+        element: <Layout/>, 
         children: [
             {
                 path: "/",
