@@ -1,43 +1,41 @@
 import { createBrowserRouter } from "react-router-dom";
 
-// Importación del Layout principal
 import { Layout } from "./pages/Layout";
-
 import HeroSection from "./components/Hero/HeroSection";
-import ChampionsGrid from "./components/blog/ChampionsGrid";
-import ChampionDetail from "./components/blog/ChampionDetail";
-import ItemsGrid from "./components/blog/ItemsGrid";
-import MapsView from "./components/blog/MapsView";
-import FavoritesView from "./components/blog/FavoritesView";
+import ChampionsGrid from "./components/Blog/ChampionsGrid";
+import ChampionDetail from "./components/Blog/ChampionDetail";
+import ItemsGrid from "./components/Blog/ItemsGrid";
+import MapsView from "./components/Blog/MapsView";
+import FavoritesView from "./components/Blog/FavoritesView";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Layout/>, 
+        element: <Layout />,
         children: [
             {
                 path: "/",
-                element: <HeroSection /> // Vista principal al entrar al blog
+                element: <HeroSection />
             },
             {
                 path: "/champions",
-                element: <ChampionsGrid /> // Lista general de campeones
+                element: <ChampionsGrid />
             },
             {
                 path: "/champions/:id",
-                element: <ChampionDetail /> // Detalle específico dinámico
+                element: <ChampionDetail />
             },
             {
                 path: "/items",
-                element: <ItemsGrid /> // Grilla de ítems
+                element: <ItemsGrid />
             },
             {
                 path: "/maps",
-                element: <MapsView /> // Territorios y mapas
+                element: <MapsView />
             },
             {
                 path: "/favorites",
-                element: <FavoritesView /> // Lista de favoritos guardados
+                element: <FavoritesView />
             }
         ]
     }
