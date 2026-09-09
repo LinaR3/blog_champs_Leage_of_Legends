@@ -1,6 +1,6 @@
 import SearchBar from '../Search/SearchBar';
 
-export default function Header({ champions, items, version, onSelect, onNavigate }) {
+export default function Header({ champions, items, version, favCount, onShowFavs, onSelect, onNavigate }) {
   const champList = Object.values(champions).map(c => ({
     id: c.id,
     name: c.name,
@@ -58,6 +58,5 @@ export default function Header({ champions, items, version, onSelect, onNavigate
       {version && (
         <span className="hidden md:block text-[#3D5A80] text-xs font-['JetBrains_Mono']">v{version}</span>
       )}
-    </header>
-  );
-}
+
+      <button
