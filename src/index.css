@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=JetBrains+Mono:wght@400;500&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --font-bungee: 'Bungee', cursive;
   --font-bungee-shade: 'Bungee Shade', cursive;
