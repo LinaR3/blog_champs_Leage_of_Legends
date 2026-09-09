@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import { getChampionDetail } from '../../services/ddragon';
 
-export default function ChampionDetail({ championId, version, isFavorite, onToggleFav, onBack }) {
+export default function ChampionDetail() {
+  const { id: championId } = useParams();
+  const navigate = useNavigate();
+  const { isFavorite, toggleFavorite } = useOutletContext();
+
   const [champion, setChampion] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,9 +22,7 @@ export default function ChampionDetail({ championId, version, isFavorite, onTogg
         setLoading(false);
       }
     }
-    if (championId) {
-      fetchDetail();
-    }
+    if (championId) fetchDetail();
   }, [championId]);
 
   if (loading) {
@@ -32,11 +35,21 @@ export default function ChampionDetail({ championId, version, isFavorite, onTogg
 
   if (!champion) return null;
 
+  const favorite = isFavorite(champion.id);
+
+  const handleToggleFav = () => {
+    toggleFavorite({
+      id: champion.id,
+      name: champion.name,
+      type: 'champion',
+      image: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg`,
+    });
+  };
+
   return (
     <div className="max-w-5xl mx-auto px-6">
-      {/* Botón de regreso */}
       <button
-        onClick={onBack}
+        onClick={() => navigate('/champions')}
         className="mb-6 flex items-center gap-2 text-xs text-[#00D4FF] hover:text-[#E8F0FF] transition-colors"
         style={{ fontFamily: 'JetBrains Mono, monospace' }}
       >
@@ -46,7 +59,6 @@ export default function ChampionDetail({ championId, version, isFavorite, onTogg
         VOLVER A CAMPEONES
       </button>
 
-      {/* Cabecera con Splash Art */}
       <div className="relative h-96 overflow-hidden border border-[#1E3A6E] mb-8 bg-[#0F1320]">
         <img
           src={`https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${champion.id}_0.jpg`}
@@ -55,7 +67,7 @@ export default function ChampionDetail({ championId, version, isFavorite, onTogg
           style={{ filter: 'brightness(0.8) saturate(1.2)' }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0B14] via-transparent to-transparent" />
-        
+
         <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end">
           <div>
             <p className="text-xs text-[#00D4FF] tracking-widest mb-1" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
@@ -67,20 +79,19 @@ export default function ChampionDetail({ championId, version, isFavorite, onTogg
           </div>
 
           <button
-            onClick={onToggleFav}
+            onClick={handleToggleFav}
             className="px-4 py-2 bg-[#0F1320]/80 border border-[#C850B0] flex items-center gap-2 hover:bg-[#C850B0]/20 transition-colors"
           >
-            <svg className="w-5 h-5" fill={isFavorite ? '#C850B0' : 'none'} stroke="#C850B0" viewBox="0 0 24 24">
+            <svg className="w-5 h-5" fill={favorite ? '#C850B0' : 'none'} stroke="#C850B0" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
             </svg>
             <span className="text-xs text-[#E8F0FF]" style={{ fontFamily: 'JetBrains Mono, monospace' }}>
-              {isFavorite ? 'EN FAVORITOS' : 'FAVORITO'}
+              {favorite ? 'EN FAVORITOS' : 'FAVORITO'}
             </span>
           </button>
         </div>
       </div>
 
-      {/* Lore y Estadísticas */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="md:col-span-2 space-y-4">
           <h3 className="text-lg font-bold text-[#00D4FF]" style={{ fontFamily: 'Bungee, cursive' }}>HISTORIA</h3>
