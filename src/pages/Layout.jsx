@@ -46,7 +46,7 @@ export const Layout = () => {
       />
 
       {/* Área principal */}
-      <div className="flex-1 flex flex-col" style={{ marginLeft: '16rem' }}>
+      <div className="flex-1 flex flex-col">
         <Header
           champions={champions}
           items={Object.fromEntries(itemList.map(i => [i.id, i]))}
