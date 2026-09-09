@@ -60,3 +60,19 @@ export default function Header({ champions, items, version, favCount, onShowFavs
       )}
 
       <button
+        onClick={onShowFavs}
+        className="relative flex items-center gap-2 px-3 py-1.5 border border-[#1E3A6E] text-[#A8C4E0] hover:border-[#C850B0] hover:text-[#C850B0] transition-all text-xs font-['Rajdhani'] font-semibold tracking-wider"
+      >
+        <svg className="w-4 h-4" fill={favCount > 0 ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+        </svg>
+        FAVORITOS
+        {favCount > 0 && (
+          <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-[#C850B0] text-white text-[10px] flex items-center justify-center font-bold">
+            {favCount}
+          </span>
+        )}
+      </button>
+    </header>
+  );
+}
