@@ -21,7 +21,7 @@ export default function Header({ champions, items, version, favCount, onShowFavs
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 h-14 flex items-center gap-4"
-      style={{ paddingLeft: '4rem', paddingRight: '1.5rem', background: 'linear-gradient(to bottom, rgba(10,11,20,0.98) 0%, rgba(10,11,20,0.85) 100%)', borderBottom: '1px solid rgba(30,58,110,0.5)', backdropFilter: 'blur(12px)' }}>
+      style={{ paddingLeft: '2rem', paddingRight: '1.5rem', background: 'linear-gradient(to bottom, rgba(10,11,20,0.98) 0%, rgba(10,11,20,0.85) 100%)', borderBottom: '1px solid rgba(30,58,110,0.5)', backdropFilter: 'blur(12px)' }}>
 
       <div className="flex items-center gap-2 mr-4">
         <span className="text-[#00D4FF] text-xs font-['JetBrains_Mono'] tracking-widest opacity-60">blog</span>

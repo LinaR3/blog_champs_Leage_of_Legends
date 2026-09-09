@@ -54,6 +54,8 @@ export const Layout = () => {
           favCount={favorites.length}
           onShowFavs={() => navigate('/favorites')}
           onSelect={handleSearchSelect}
+          active={getActiveSection()}
+          onNavigate={(s) => { if (s === 'home') navigate('/'); else navigate(`/${s}`); }}
         />
 
         <main

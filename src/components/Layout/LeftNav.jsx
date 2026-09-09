@@ -1,71 +1,47 @@
 const links = [
-  { id: 'champions', label: 'Campeones', hoverColor: '#00D4FF' },
-  { id: 'items',     label: 'Ítems',     hoverColor: '#C850B0' },
-  { id: 'maps',      label: 'Mapas',     hoverColor: '#A8C4E0' },
+  { id: 'champions', label: 'Campeones', color: '#1E3A6E', hoverColor: '#00D4FF' },
+  { id: 'items',     label: 'Ítems',     color: '#1E3A6E', hoverColor: '#C850B0' },
+  { id: 'maps',      label: 'Mapas',     color: '#1E3A6E', hoverColor: '#A8C4E0' },
 ];
 
 export default function LeftNav({ active, onNavigate, favCount }) {
   return (
     <>
-      <button
-        onClick={() => onNavigate('home')}
-        className="fixed top-7 left-5 z-50 text-left group"
-        style={{ background: 'none', border: 'none', padding: 0 }}
+      <nav
+        className="fixed left-0 top-0 h-full z-40 flex flex-col items-start justify-center"
+        style={{ pointerEvents: 'none' }}
       >
-        <span className="block tracking-[0.3em] mb-1" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: '0.55rem', color: '#3D5A80' }}>
-          blog //
-        </span>
-        <span className="block leading-none transition-all duration-300 group-hover:tracking-wider" style={{ fontFamily: 'Bungee, cursive', fontSize: '1.35rem', color: '#00D4FF', textShadow: '0 0 18px rgba(0,212,255,0.45)' }}>
-          CHAMPS
-        </span>
-        <span className="block leading-none transition-all duration-300 group-hover:tracking-wider" style={{ fontFamily: 'Bungee, cursive', fontSize: '1.35rem', color: '#C850B0', textShadow: '0 0 18px rgba(200,80,176,0.4)', marginLeft: '6px' }}>
-          _LOL
-        </span>
-      </button>
-
-      {/* Atajos rotados 90°, sin caja ni fondo */}
-      <div
-        className="fixed left-0 z-40 flex flex-col"
-        style={{ top: '11rem', bottom: '5rem', pointerEvents: 'none' }}
-      >
-        {links.map((link) => {
-          const isActive = active === link.id;
-          return (
-            <button
-              key={link.id}
-              onClick={() => onNavigate(link.id)}
-              style={{
-                background: 'none',
-                border: 'none',
-                padding: 0,
-                cursor: 'pointer',
-                pointerEvents: 'auto',
-                position: 'absolute',
-                left: '18px',
-                top: link.id === 'champions' ? '0%' : link.id === 'items' ? '38%' : '76%',
-                transform: 'rotate(-90deg)',
-                transformOrigin: 'left top',
-                whiteSpace: 'nowrap',
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: 'Bungee, cursive',
-                  fontSize: isActive ? '1rem' : '0.8rem',
-                  color: isActive ? link.hoverColor : '#1E3A6E',
-                  textShadow: isActive
-                    ? `0 0 20px ${link.hoverColor}70, 0 0 40px ${link.hoverColor}30`
-                    : 'none',
-                  letterSpacing: '0.15em',
-                  transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
-                }}
+        <div className="flex flex-col gap-6" style={{ pointerEvents: 'auto', paddingLeft: '20px' }}>
+          {links.map((link) => {
+            const isActive = active === link.id;
+            return (
+              <button
+                key={link.id}
+                onClick={() => onNavigate(link.id)}
+                className="text-left"
+                style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
               >
-                {link.label.toUpperCase()}
-              </span>
-            </button>
-          );
-        })}
-      </div>
+                <span
+                  style={{
+                    fontFamily: 'Bungee, cursive',
+                    fontSize: isActive ? '1rem' : '0.8rem',
+                    color: isActive ? link.hoverColor : link.color,
+                    textShadow: isActive
+                      ? `0 0 20px ${link.hoverColor}70, 0 0 40px ${link.hoverColor}30`
+                      : 'none',
+                    letterSpacing: '0.04em',
+                    transition: 'all 0.4s cubic-bezier(0.22,1,0.36,1)',
+                    display: 'block',
+                    transform: isActive ? 'translateX(6px)' : 'translateX(0)',
+                  }}
+                >
+                  {link.label.toUpperCase()}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
 
       <button
         onClick={() => onNavigate('favorites')}
