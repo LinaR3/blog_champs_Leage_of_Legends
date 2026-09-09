@@ -51,18 +51,18 @@ export const Layout = () => {
           champions={champions}
           items={Object.fromEntries(itemList.map(i => [i.id, i]))}
           version={version || itemVersion}
-          favCount={favorites.length}
-          onShowFavs={() => navigate('/favorites')}
           onSelect={handleSearchSelect}
-          active={getActiveSection()}
           onNavigate={(s) => { if (s === 'home') navigate('/'); else navigate(`/${s}`); }}
         />
 
         <main
           className="main-scroll flex-1 overflow-y-auto"
-          style={{ paddingTop: location.pathname === '/' ? '0' : '3.5rem' }}
+          style={{
+            paddingTop: location.pathname === '/' ? '0' : '3.5rem',
+            paddingLeft: location.pathname === '/' ? '0' : '6rem',
+          }}
         >
-          <Outlet context={{ champList, itemList, version, itemVersion, champsLoading, itemsLoading, champions, isFavorite, toggleFavorite, mapCount, navigate }} />
+          <Outlet context={{ champList, itemList, version, itemVersion, champsLoading, itemsLoading, champions, favorites, isFavorite, toggleFavorite, mapCount, navigate }} />
         </main>
       </div>
     </div>

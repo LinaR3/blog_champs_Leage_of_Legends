@@ -1,7 +1,7 @@
 const links = [
   { id: 'champions', label: 'Campeones', color: '#1E3A6E', hoverColor: '#00D4FF' },
-  { id: 'items',     label: 'Ítems',     color: '#1E3A6E', hoverColor: '#C850B0' },
-  { id: 'maps',      label: 'Mapas',     color: '#1E3A6E', hoverColor: '#A8C4E0' },
+  { id: 'items', label: 'Ítems', color: '#1E3A6E', hoverColor: '#C850B0' },
+  { id: 'maps', label: 'Mapas', color: '#1E3A6E', hoverColor: '#A8C4E0' },
 ];
 
 export default function LeftNav({ active, onNavigate, favCount }) {
@@ -11,6 +11,16 @@ export default function LeftNav({ active, onNavigate, favCount }) {
         className="fixed left-0 top-0 h-full z-40 flex flex-col items-start justify-center"
         style={{ pointerEvents: 'none' }}
       >
+        <div
+          className="fixed left-0 top-0 h-full"
+          style={{
+            width: '140px',
+            background: 'linear-gradient(to right, rgba(10,11,20,0.85) 0%, rgba(10,11,20,0.4) 55%, transparent 100%)',
+            pointerEvents: 'none',
+            zIndex: -1,
+          }}
+        />
+
         <div className="flex flex-col gap-6" style={{ pointerEvents: 'auto', paddingLeft: '20px' }}>
           {links.map((link) => {
             const isActive = active === link.id;
