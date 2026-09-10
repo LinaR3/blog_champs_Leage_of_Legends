@@ -51,6 +51,8 @@ export const Layout = () => {
           champions={champions}
           items={Object.fromEntries(itemList.map(i => [i.id, i]))}
           version={version || itemVersion}
+          favCount={favorites.length}
+          onShowFavs={() => navigate('/favorites')}
           onSelect={handleSearchSelect}
           onNavigate={(s) => { if (s === 'home') navigate('/'); else navigate(`/${s}`); }}
         />
