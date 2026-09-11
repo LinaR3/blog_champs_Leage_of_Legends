@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const tagColors = {
   Fighter: '#C850B0',
@@ -10,6 +11,14 @@ const tagColors = {
 };
 
 export default function ChampionCard({ champion, isFavorite, onToggleFav }) {
+  const [pulsing, setPulsing] = useState(false);
+
+  const handleToggle = (e) => {
+    e.preventDefault();
+    onToggleFav();
+    setPulsing(true);
+    setTimeout(() => setPulsing(false), 320);
+  };
   return (
     <Link
       to={`/champions/${champion.id}`}
@@ -39,10 +48,9 @@ export default function ChampionCard({ champion, isFavorite, onToggleFav }) {
             </span>
           ))}
         </div>
-
         <button
-          onClick={e => { e.preventDefault(); onToggleFav(); }}
-          className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100"
+          onClick={handleToggle}
+          className={`absolute top-2 right-2 w-7 h-7 flex items-center justify-center transition-all opacity-0 group-hover:opacity-100 ${pulsing ? 'fav-pulse' : ''}`}
           style={{ background: 'rgba(10,11,20,0.8)' }}
         >
           <svg
