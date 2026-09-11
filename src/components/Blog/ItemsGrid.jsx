@@ -9,6 +9,7 @@ export default function ItemsGrid() {
   const [search, setSearch] = useState('');
   const [activeTag, setActiveTag] = useState(null);
   const [pulsingIds, setPulsingIds] = useState(new Set());
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const filtered = itemList.filter(item => {
     const matchName = item.name.toLowerCase().includes(search.toLowerCase());
@@ -16,7 +17,11 @@ export default function ItemsGrid() {
     return matchName && matchTag;
   });
 
-  const cleanDesc = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const cleanDesc = (html) => html
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
 
   const handleToggle = (item) => {
     toggleFavorite({ id: item.id, name: item.name, type: 'item', image: `https://ddragon.leagueoflegends.com/cdn/${itemVersion}/img/item/${item.image.full}` });
@@ -87,8 +92,9 @@ export default function ItemsGrid() {
           return (
             <div
               key={item.id}
-              className="group relative p-3 transition-all cursor-default"
+              className="group relative p-3 transition-all cursor-pointer hover:scale-[1.03]"
               style={{ background: 'rgba(15,19,32,0.8)', border: '1px solid rgba(30,58,110,0.4)' }}
+              onClick={() => setSelectedItem(item)}
             >
               <div className="relative w-12 h-12 mb-2 overflow-hidden" style={{ border: '1px solid rgba(200,80,176,0.2)' }}>
                 <img
@@ -106,21 +112,8 @@ export default function ItemsGrid() {
                 {item.gold.total}g
               </p>
 
-              <div
-                className="absolute left-full top-0 ml-2 w-48 p-3 z-20 opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity"
-                style={{ background: '#0F1320', border: '1px solid rgba(200,80,176,0.3)', boxShadow: '0 10px 40px rgba(0,0,0,0.8)' }}
-              >
-                <p className="text-xs font-bold text-[#E8F0FF] mb-1" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{item.name}</p>
-                {item.plaintext && (
-                  <p className="text-[10px] text-[#C850B0] mb-2" style={{ fontFamily: 'Rajdhani, sans-serif' }}>{item.plaintext}</p>
-                )}
-                <p className="text-[10px] text-[#6B8EB8] leading-relaxed" style={{ fontFamily: 'Rajdhani, sans-serif' }}>
-                  {cleanDesc(item.description).slice(0, 120)}...
-                </p>
-              </div>
-
               <button
-                onClick={() => handleToggle(item)}
+                onClick={(e) => { e.stopPropagation(); handleToggle(item); }}
                 className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity ${pulsingIds.has(item.id) ? 'fav-pulse' : ''}`}
               >
                 <svg className="w-3 h-3" fill={fav ? '#C850B0' : 'none'} stroke={fav ? '#C850B0' : '#6B8EB8'} viewBox="0 0 24 24">
@@ -131,6 +124,79 @@ export default function ItemsGrid() {
           );
         })}
       </div>
+
+      {selectedItem && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-6"
+          style={{ background: 'rgba(10,11,20,0.85)', backdropFilter: 'blur(4px)' }}
+          onClick={() => setSelectedItem(null)}
+        >
+          <div
+            className="relative w-full max-w-md max-h-[85vh] overflow-y-auto p-6"
+            style={{ background: '#0F1320', border: '1px solid rgba(200,80,176,0.4)', boxShadow: '0 20px 60px rgba(0,0,0,0.9)' }}
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedItem(null)}
+              className="absolute top-4 right-4 text-[#6B8EB8] hover:text-[#E8F0FF] transition-colors"
+            >
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </button>
+
+            <div
+              className="w-24 h-24 mx-auto mb-4 overflow-hidden"
+              style={{ border: '2px solid rgba(200,80,176,0.4)' }}
+            >
+              <img
+                src={`https://ddragon.leagueoflegends.com/cdn/${itemVersion}/img/item/${selectedItem.image.full}`}
+                alt={selectedItem.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <h3 className="text-xl font-bold text-center mb-1" style={{ fontFamily: 'Bungee, cursive', color: '#E8F0FF' }}>
+              {selectedItem.name}
+            </h3>
+
+            <p className="text-sm text-center mb-4" style={{ fontFamily: 'JetBrains Mono, monospace', color: '#C850B0' }}>
+              {selectedItem.gold.total}g
+            </p>
+
+            {selectedItem.plaintext && (
+              <p className="text-sm text-center mb-4 italic" style={{ fontFamily: 'Rajdhani, sans-serif', color: '#A8C4E0' }}>
+                {selectedItem.plaintext}
+              </p>
+            )}
+
+            <div className="h-px mb-4" style={{ background: 'linear-gradient(to right, transparent, #C850B033, transparent)' }} />
+
+            <p
+              className="text-sm leading-relaxed"
+              style={{ fontFamily: 'Rajdhani, sans-serif', color: '#6B8EB8', whiteSpace: 'pre-line' }}
+            >
+              {cleanDesc(selectedItem.description)}
+            </p>
+
+            <button
+              onClick={() => handleToggle(selectedItem)}
+              className={`mt-6 w-full py-2.5 flex items-center justify-center gap-2 border transition-colors ${
+                isFavorite(selectedItem.id)
+                  ? 'border-[#C850B0] text-[#C850B0]'
+                  : 'border-[#1E3A6E] text-[#A8C4E0] hover:border-[#C850B0] hover:text-[#C850B0]'
+              } ${pulsingIds.has(selectedItem.id) ? 'fav-pulse' : ''}`}
+            >
+              <svg className="w-4 h-4" fill={isFavorite(selectedItem.id) ? 'currentColor' : 'none'} stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              <span className="text-xs tracking-wider" style={{ fontFamily: 'Rajdhani, sans-serif', fontWeight: 600 }}>
+                {isFavorite(selectedItem.id) ? 'EN FAVORITOS' : 'AGREGAR A FAVORITOS'}
+              </span>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

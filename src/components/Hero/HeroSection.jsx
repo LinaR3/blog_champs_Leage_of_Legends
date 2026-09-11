@@ -61,7 +61,7 @@ export default function HeroSection() {
 
       <div
         className="relative z-10 flex flex-col items-center justify-center flex-1 px-8 text-center"
-        style={{ opacity, transform: `translateY(${translateY}px)` }}
+        style={{ opacity, transform: `translateY(${translateY}px)`, paddingTop: '4rem' }}
       >
         <p className="mb-6 tracking-[0.4em] text-[10px]" style={{ fontFamily: 'JetBrains Mono, monospace', color: '#00D4FF', opacity: 0.8 }}>
           DATA DRAGON API — RIOT GAMES

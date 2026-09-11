@@ -61,7 +61,7 @@ export const Layout = () => {
           className="main-scroll flex-1 overflow-y-auto"
           style={{
             paddingTop: location.pathname === '/' ? '0' : '3.5rem',
-            paddingLeft: location.pathname === '/' ? '0' : '6rem',
+            paddingLeft: location.pathname === '/' ? '0' : '8rem',
           }}
         >
           <Outlet context={{ champList, itemList, version, itemVersion, champsLoading, itemsLoading, champions, favorites, isFavorite, toggleFavorite, mapCount, navigate }} />

@@ -34,7 +34,7 @@ export default function LeftNav({ active, onNavigate, favCount }) {
                 <span
                   style={{
                     fontFamily: 'Bungee, cursive',
-                    fontSize: isActive ? '1rem' : '0.8rem',
+                    fontSize: isActive ? '0.85rem' : '0.68rem',
                     color: isActive ? link.hoverColor : link.color,
                     textShadow: isActive
                       ? `0 0 20px ${link.hoverColor}70, 0 0 40px ${link.hoverColor}30`
