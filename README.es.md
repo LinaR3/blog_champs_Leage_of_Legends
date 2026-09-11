@@ -58,7 +58,7 @@ src/
 ├── pages/
 │   └── Layout.jsx       # Layout raíz: hooks de datos + <Outlet>
 ├── services/
-│   └── ddragon.js       # Única puerta de entrada a la API de Riot
+│   └── ddragon.js       # Puerta de entrada a la API de Riot
 └── routes.jsx           # Definición de rutas con react-router-dom
 ```
 

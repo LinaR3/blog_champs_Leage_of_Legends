@@ -1,73 +1,96 @@
-# WebApp Template with React JS
+# ⚔️ Blog Champs_LoL
 
+An interactive blog for exploring the **League of Legends** universe — champions, items and maps — built with React and powered by Riot Games' **Data Dragon API**.
 
-Used by 4Geeks.com and 4Geeks Academy students, this template helps to bootstrap your first multi-page web applications by integrating with React latest version, vercel deployments and [Vite](https://4geeks.com/lesson/intro-to-vite-module-bundler) for bundling.
+![Vite](https://img.shields.io/badge/Vite-4.4.8-646CFF?logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-18.2-61DAFB?logo=react&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-6-CA4245?logo=reactrouter&logoColor=white)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?logo=tailwindcss&logoColor=white)
 
-### Getting stated:
+## ✨ Features
 
-> 📦 Make sure you are using at least node version 20.
+- **Browse champions**: grid with search by name and filter by role (Fighter, Mage, Assassin, Tank, Support, Marksman)
+- **Champion detail**: splash art, lore and base stats
+- **Browse items**: grid with search and category filter, with description tooltip
+- **Maps of Runeterra**: the game's 6 battlegrounds, each with a description
+- **Favorites**: bookmark champions and items, persisted in `localStorage`, accessible from a dedicated view
+- **Global search**: in the header, with live results as you type
+- **"Chromeless" design**: minimalist navigation with no borders or rigid containers, with a glow effect inspired by Runeterra's aesthetic
 
-1. Install the node package dependencies by typing: `$ npm install`
+## 🛠️ Tech stack
 
-2. Create a .env file by typing `$ cp .env.example .env`
+| Layer | Tool |
+|---|---|
+| Bundler | Vite |
+| UI | React 18 + React Router 6 |
+| Styling | Tailwind CSS 3 |
+| Data | [Data Dragon API](https://developer.riotgames.com/docs/lol#data-dragon) (Riot Games) |
+| Local persistence | `localStorage` (favorites) |
 
-3. Start coding! and the vite dev server with live reload by typing: `$ npm run start`
+## 🚀 Running it locally
 
+> 📦 Requires Node.js 20 or higher.
 
-### Styling
+```bash
+# 1. Clone the repository
+git clone https://github.com/LinaR3/blog_champs_Leage_of_Legends.git
+cd blog_champs_Leage_of_Legends
 
-You can update the `./index.css` or create new `.css` files and import them into your current css or js files depending on your needs.
+# 2. Install dependencies
+npm install
 
-### Components
-
-Add more files into your `./src/components` or styles folder as you need them and import them into your current files as needed.
-
-💡Note: There is an example using the Context API inside `pages/demo.js`;
-
-### Pages
-
-Add more files into your `./js/pages` and import them in `./routes.jsx`.
-Each page must match at least one route inside `routes.jsx`
-
-### Centralized Store with useReducer
-
-This template comes with a centralized & general state that's shared with all pages and compoentes, we call it "the store".   
-
-The file `./src/store.js` has a default structure for the store, we encourage you to change it and adapt it to your data needs (for example, if you are doing a `Todo list` you will probably have a array of todos here).
-
-+ Learn [how the useReducer works](https://4geeks.com/lesson/optimize-react-components-usereducer).
-+ Read more about [implementing a global state with Context API](https://4geeks.com/lesson/context-api)
-+ Read more about [react hooks](https://content.breatheco.de/lesson/react-hooks-explained)
-
-The store `Provider` for this context is already set on `./src/main.jsx`. You can access the store from any component using the `useGlobalReducer` hook to get the `store` and `dispatcher`. Check `/views/demo.js` to see a demo. Here is a smaller sample:
-
-```jsx
-import useGlobalReducer from "./src/hooks/useGlobalReducer";
-
-const MyComponentSuper = () => {
-  //here you use the hook to get dispatcher and store
-  import { dispatch, store } = useGlobalReducer();
-
-  return <div>{/* you can use your actions or store inside the html */}</div>
-}
+# 3. Start the dev server
+npm run start
 ```
 
-## Publish your website!
+Open `http://localhost:3000` in your browser.
 
-1. **Vercel:** The FREE recomended hosting provider is [vercel.com](https://vercel.com/), you can deploy in 1 minutes by typing the following 2 commands:
+## 📁 Project structure
 
-Login (you need to have an account):
-```sh
-$ npm i vercel -g && vercel login
 ```
-Deploy:
-```sh
-$ vercel --prod
+src/
+├── components/
+│   ├── Blog/          # Champion, item, map and favorites views
+│   ├── Hero/           # Landing/cover section
+│   ├── Layout/         # Header, LeftNav, Footer
+│   └── Search/         # Global search bar
+├── hooks/               # useChampions, useItems, useFavorites, useMaps
+├── pages/
+│   └── Layout.jsx       # Root layout: data hooks + <Outlet>
+├── services/
+│   └── ddragon.js       # Single entry point to the Riot API
+└── routes.jsx           # Route definitions with react-router-dom
 ```
-✎ Note: If you don't have an account just go to vercel.com, create a account and come back here.
 
-![Vercel example procedure to deploy](https://github.com/4GeeksAcademy/react-hello-webapp/blob/4b530ba091a981d3916cc6e960e370decaf2e234/docs/deploy.png?raw=true)
+### Data architecture
 
-## Contributors
+```
+Riot Games API (Data Dragon)
+        ↓ fetch
+services/ddragon.js   ← single access point to the API
+        ↓
+hooks/ (useChampions, useItems, useFavorites)
+        ↓
+pages/Layout.jsx       ← centralizes the data
+   ↙                        ↘
+Header / LeftNav          <Outlet context={{...}}>
+(direct props)            (useOutletContext in each page)
+```
 
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning) and [CyberSecurity Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/cybersecurity).
+Route-level pages (`ChampionsGrid`, `ChampionDetail`, `ItemsGrid`, `MapsView`, `FavoritesView`) don't receive data through props — they consume it via `useOutletContext()`, since `Layout.jsx` is the single place responsible for loading data and sharing it through the router.
+
+## 🌐 Deployment
+
+Recommended with [Vercel](https://vercel.com):
+
+```bash
+npm i vercel -g
+vercel login
+vercel --prod
+```
+
+## 📄 Credits
+
+- Champion, item and splash art data: [Data Dragon](https://developer.riotgames.com/docs/lol#data-dragon), courtesy of Riot Games.
+- Base template: [4GeeksAcademy/react-hello-webapp](https://github.com/4GeeksAcademy/react-hello-webapp)
+- League of Legends is a registered trademark of Riot Games, Inc. This project is an academic assignment with no commercial purpose.
