@@ -63,18 +63,18 @@ export default function HeroSection() {
         className="relative z-10 flex flex-col items-center justify-center flex-1 px-8 text-center"
         style={{ opacity, transform: `translateY(${translateY}px)`, paddingTop: '4rem' }}
       >
-        <p className="mb-6 tracking-[0.4em] text-[10px]" style={{ fontFamily: 'JetBrains Mono, monospace', color: '#00D4FF', opacity: 0.8 }}>
+        <p className="mb-6 tracking-[0.4em] text-[10px] hero-anim hero-anim-1" style={{ fontFamily: 'JetBrains Mono, monospace', color: '#00D4FF', opacity: 0.8 }}>
           DATA DRAGON API — RIOT GAMES
         </p>
 
-        <h1 className="text-[clamp(3rem,12vw,9rem)] leading-none mb-2 glow-cyan" style={{ fontFamily: 'Bungee, cursive', color: '#E8F0FF', letterSpacing: '-0.01em' }}>
+        <h1 className="text-[clamp(3rem,12vw,9rem)] leading-none mb-2 glow-cyan hero-anim hero-anim-2" style={{ fontFamily: 'Bungee, cursive', color: '#E8F0FF', letterSpacing: '-0.01em' }}>
           BLOG
         </h1>
-        <h1 className="text-[clamp(2rem,8vw,6rem)] leading-none mb-4 glow-pink" style={{ fontFamily: 'Bungee, cursive', color: '#C850B0', letterSpacing: '0.05em' }}>
+        <h1 className="text-[clamp(2rem,8vw,6rem)] leading-none mb-4 glow-pink hero-anim hero-anim-3" style={{ fontFamily: 'Bungee, cursive', color: '#C850B0', letterSpacing: '0.05em' }}>
           CHAMPS_LOL
         </h1>
 
-        <p className="max-w-md text-lg mb-10 leading-relaxed" style={{ fontFamily: 'Rajdhani, sans-serif', color: '#6B8EB8', fontWeight: 500 }}>
+        <p className="max-w-md text-lg mb-10 leading-relaxed hero-anim hero-anim-4" style={{ fontFamily: 'Rajdhani, sans-serif', color: '#6B8EB8', fontWeight: 500 }}>
           Explora el universo de League of Legends — campeones, ítems y territorios de Runaterra
         </p>
 
