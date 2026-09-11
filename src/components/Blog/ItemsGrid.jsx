@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 const ALL_TAGS = ['Damage', 'SpellDamage', 'Armor', 'MagicResist', 'Health', 'Mana', 'AttackSpeed', 'CriticalStrike', 'LifeSteal', 'Lane'];
-const [pulsingIds, setPulsingIds] = useState(new Set());
 
 export default function ItemsGrid() {
   const { itemList, itemVersion, itemsLoading, isFavorite, toggleFavorite } = useOutletContext();
 
   const [search, setSearch] = useState('');
   const [activeTag, setActiveTag] = useState(null);
+  const [pulsingIds, setPulsingIds] = useState(new Set());
 
   const filtered = itemList.filter(item => {
     const matchName = item.name.toLowerCase().includes(search.toLowerCase());
@@ -17,6 +17,7 @@ export default function ItemsGrid() {
   });
 
   const cleanDesc = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+
   const handleToggle = (item) => {
     toggleFavorite({ id: item.id, name: item.name, type: 'item', image: `https://ddragon.leagueoflegends.com/cdn/${itemVersion}/img/item/${item.image.full}` });
     setPulsingIds(prev => new Set(prev).add(item.id));
@@ -61,9 +62,8 @@ export default function ItemsGrid() {
         <div className="flex gap-2 flex-wrap">
           {ALL_TAGS.slice(0, 6).map(tag => (
             <button
-              onClick={() => handleToggle(item)}
-              className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity ${pulsingIds.has(item.id) ? 'fav-pulse' : ''}`}
-            >
+              key={tag}
+              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
               className="tag transition-all"
               style={{
                 color: activeTag === tag ? '#C850B0' : '#3D5A80',
@@ -120,8 +120,8 @@ export default function ItemsGrid() {
               </div>
 
               <button
-                onClick={() => toggleFavorite({ id: item.id, name: item.name, type: 'item', image: `https://ddragon.leagueoflegends.com/cdn/${itemVersion}/img/item/${item.image.full}` })}
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={() => handleToggle(item)}
+                className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity ${pulsingIds.has(item.id) ? 'fav-pulse' : ''}`}
               >
                 <svg className="w-3 h-3" fill={fav ? '#C850B0' : 'none'} stroke={fav ? '#C850B0' : '#6B8EB8'} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
