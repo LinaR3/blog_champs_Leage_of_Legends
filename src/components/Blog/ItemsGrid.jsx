@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 
 const ALL_TAGS = ['Damage', 'SpellDamage', 'Armor', 'MagicResist', 'Health', 'Mana', 'AttackSpeed', 'CriticalStrike', 'LifeSteal', 'Lane'];
+const [pulsingIds, setPulsingIds] = useState(new Set());
 
 export default function ItemsGrid() {
   const { itemList, itemVersion, itemsLoading, isFavorite, toggleFavorite } = useOutletContext();
@@ -16,6 +17,17 @@ export default function ItemsGrid() {
   });
 
   const cleanDesc = (html) => html.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const handleToggle = (item) => {
+    toggleFavorite({ id: item.id, name: item.name, type: 'item', image: `https://ddragon.leagueoflegends.com/cdn/${itemVersion}/img/item/${item.image.full}` });
+    setPulsingIds(prev => new Set(prev).add(item.id));
+    setTimeout(() => {
+      setPulsingIds(prev => {
+        const next = new Set(prev);
+        next.delete(item.id);
+        return next;
+      });
+    }, 320);
+  };
 
   if (itemsLoading) {
     return (
@@ -49,8 +61,9 @@ export default function ItemsGrid() {
         <div className="flex gap-2 flex-wrap">
           {ALL_TAGS.slice(0, 6).map(tag => (
             <button
-              key={tag}
-              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+              onClick={() => handleToggle(item)}
+              className={`absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity ${pulsingIds.has(item.id) ? 'fav-pulse' : ''}`}
+            >
               className="tag transition-all"
               style={{
                 color: activeTag === tag ? '#C850B0' : '#3D5A80',
